@@ -1,1 +1,55 @@
+DQS_DN<0>
+DQS_DN<01>
+DQS_DN<1>
 
+cmpStringNumber (const void *pa ,const void *pb)
+{
+    char* a = (char*)pa;
+    char* b = (char*)pb;
+    int flag = 0 ;
+    while (*a == *b && *a != '\0' && (*a < '0' || *a > '9'))
+    {
+        a++;
+        b++;
+    }
+    flag = *a - *b;
+
+	if(*a >= '0' && *a <= '9' && *b >= '0' && *b <= '9')
+	{
+		CQStringT strA = a, strB = b;
+		int countA = 0, countB = 0;
+
+		while(*a >= '0' && *a <= '9')
+		{
+			countA++;
+			a++;
+
+		}
+		while(*b >= '0' && *b <= '9')
+		{
+			countB++;
+			b++;
+		}
+
+		long_t numA = Str2Long((LPCTSTR)strA.Left(countA),0);
+		long_t numB = Str2Long((LPCTSTR)strB.Left(countB), 0);
+
+		if (numA == numB)
+		{
+			if (countA == countB)
+			{
+				flag = cmpStringNumber(a, b);
+			}
+			else
+			{
+				flag = countB - countA;
+			}
+		}
+		else
+		{
+			flag = numA - numB;
+		}
+	}
+    
+    return flag;
+}
